@@ -12,8 +12,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <version.keycloak>4.5.0.Final-SNAPSHOT</version.keycloak>
-        <!-- version.keycloak>4.4.0.Final</version.keycloak -->
+        <!-- version.keycloak>4.5.0.Final-SNAPSHOT</version.keycloak -->
+        <version.keycloak>4.4.0.Final</version.keycloak>
         <version.metrics>4.0.3</version.metrics>
         <version.mysql>8.0.12</version.mysql>
         <dir.keycloak>${project.basedir}/target/keycloak</dir.keycloak>

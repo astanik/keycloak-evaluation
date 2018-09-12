@@ -1,13 +1,7 @@
 package multiplicity.client.evaluation;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,17 +13,13 @@ import javax.ws.rs.core.Response.Status;
 
 import org.jboss.logging.Logger;
 import org.keycloak.common.enums.SslRequired;
-import org.keycloak.models.ClientModel;
 import org.keycloak.models.Constants;
 import org.keycloak.models.KeycloakContext;
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.models.ProtocolMapperModel;
 import org.keycloak.models.RealmModel;
-import org.keycloak.models.utils.KeycloakModelUtils;
+import org.keycloak.models.utils.DefaultKeyProviders;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.services.managers.RealmManager;
-
-import com.codahale.metrics.Timer.Context;
 
 /**
  * 
@@ -69,8 +59,7 @@ public class EvaluationResource {
         if (!url.endsWith("/"))
             url = url + "/";
         LOGGER.info("get " + url);
-        List<ClientModel> clients = this.session.clientStorageManager().getClients(this.context.getRealm());
-        return this.buildPage("Hallo Welt! (Clients = " + clients.size() + ")"
+        return this.buildPage("Use the following URI to create 10,000 clients for a test realm:"
             + "<p>" + url + "createSetup?realm=testRealm&clients=10000</p>");
     }
 
@@ -108,6 +97,7 @@ public class EvaluationResource {
             realmModel.setSslRequired(SslRequired.EXTERNAL);
             realmModel.setRegistrationAllowed(false);
             realmModel.setRegistrationEmailAsUsername(false);
+            DefaultKeyProviders.createProviders(realmModel);
             LOGGER.info("new Realm created: " + realmModel.getName());
         } else {
             LOGGER.info("Realm already exists: " + realmModel.getName());
